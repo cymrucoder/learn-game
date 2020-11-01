@@ -14,23 +14,34 @@ minimapRight = 2362
 minimapBottom = 260
 minimapTop = 190
 
+minimapXMargin = 2276 - minimapLeft
+minimapYMargin = minimapBottom - 245
+
 minimapWidth = minimapRight - minimapLeft
 minimapHeight = minimapBottom - minimapTop
 
-def moveMouseToAngle(angle):
-	xToMoveTo = halfX + (math.cos(math.radians(angle)) * 40)
-	yToMoveTo = halfY - (math.sin(math.radians(angle)) * 40)
-	pyautogui.moveTo(xToMoveTo, yToMoveTo)	
+minimapPreviewWidth = minimapWidth - (minimapXMargin)
+minimapPreviewHeight = minimapHeight - (minimapYMargin)
+
+def clickMouseAtAngle(angle, playerPosition=[halfX, halfY]):
+	xToMoveTo = playerPosition[0] + (math.cos(math.radians(angle)) * 40)
+	yToMoveTo = playerPosition[1] - (math.sin(math.radians(angle)) * 40)
+	pyautogui.click(x=xToMoveTo, y=yToMoveTo)
+
+def moveMouseToAngle(angle, playerPosition=[halfX, halfY]):
+	xToMoveTo = playerPosition[0] + (math.cos(math.radians(angle)) * 40)
+	yToMoveTo = playerPosition[1] - (math.sin(math.radians(angle)) * 40)
+	pyautogui.moveTo(xToMoveTo, yToMoveTo)
 
 def findMinimapPosition():
-	imMinimap = pyautogui.screenshot('minimap.png', region=(minimapLeft, minimapTop, minimapWidth, minimapHeight))
+	imMinimap = pyautogui.screenshot(region=(minimapLeft + minimapXMargin, minimapTop + minimapYMargin, minimapPreviewWidth, minimapPreviewHeight))
 	minimapDot = pyautogui.locate('minimapbluedot.png', imMinimap, grayscale=False)
 	return minimapDot
 
 def inferScreenPosition():
 	minimapDot = findMinimapPosition()
-	minimapX = minimapDot.left + (minimapDot.width / 2)
-	minimapY = minimapDot.top + (minimapDot.height / 2)
+	minimapX = minimapXMargin + (minimapDot.left + (minimapDot.width / 2))
+	minimapY = minimapYMargin + (minimapDot.top + (minimapDot.height / 2))
 	fractionX = minimapX / minimapWidth
 	fractionY = minimapY / minimapHeight
 	return [screenX * fractionX, screenY * fractionY]
@@ -38,34 +49,48 @@ def inferScreenPosition():
 time.sleep(5)
 
 pyautogui.keyDown('a')
-time.sleep(0.9)
+time.sleep(0.7)
 #pyautogui.keyUp('a')
 
-print(inferScreenPosition())
+screenPosition = inferScreenPosition()
+print(screenPosition)
 
-moveMouseToAngle(300)
+shootingAngle = 300
+
+moveMouseToAngle(shootingAngle, playerPosition=screenPosition)
 
 pyautogui.keyDown('space')
 pyautogui.click()
-time.sleep(0.5)
+time.sleep(0.2)
+
+screenPosition2 = inferScreenPosition()
+
 pyautogui.keyUp('space')
 
-moveMouseToAngle(300)
+clickMouseAtAngle(shootingAngle, playerPosition=screenPosition2)
+#pyautogui.click()
+time.sleep(0.5)
+
+screenPosition = inferScreenPosition()
+
+clickMouseAtAngle(shootingAngle, playerPosition=screenPosition)
+#pyautogui.click()
+time.sleep(1.0)
+
+screenPosition = inferScreenPosition()
+print(screenPosition)
+
+moveMouseToAngle(shootingAngle, playerPosition=screenPosition)
 pyautogui.click()
 time.sleep(1.0)
 
-moveMouseToAngle(300)
-pyautogui.click()
-time.sleep(1.0)
+screenPosition = inferScreenPosition()
+print(screenPosition)
 
-print(inferScreenPosition())
-
-moveMouseToAngle(300)
-pyautogui.click()
-time.sleep(1.0)
-
-moveMouseToAngle(300)
+moveMouseToAngle(shootingAngle, playerPosition=screenPosition)
 pyautogui.click()
 time.sleep(1.0)
 
 pyautogui.keyUp('a')
+
+time.sleep(1)
