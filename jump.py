@@ -46,6 +46,13 @@ def inferScreenPosition():
 	fractionY = minimapY / minimapHeight
 	return [screenX * fractionX, screenY * fractionY]
 
+# Click the mouse at x position along a fixed horizontal line near the bottom of the screen
+# This is to mostly replace the click at angle stuff that doesn't run quick enough
+def clickMouseAtX(x):
+	xToMoveTo = x
+	yToMoveTo = screenY - 200
+	pyautogui.click(x=xToMoveTo, y=yToMoveTo)
+
 time.sleep(5)
 
 pyautogui.keyDown('a')
@@ -58,6 +65,15 @@ pyautogui.keyDown('space')
 pyautogui.click()
 time.sleep(0.2)
 pyautogui.keyUp('space')
+
+clickMouseAtX(screenX * 0.75)
+time.sleep(1)
+
+clickMouseAtX(screenX * 0.66)
+time.sleep(1)
+
+clickMouseAtX(screenX * 0.50)
+time.sleep(1)
 
 pyautogui.keyUp('a')
 
