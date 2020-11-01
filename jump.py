@@ -4,6 +4,14 @@ import sys
 import pyautogui
 import math
 
+class Node:
+	def __init__(self, weight, bias):
+		self.weight = weight
+		self.bias = bias
+
+	def calculate(self, input):
+		return (input * self.weight) + self.bias
+
 screenX = 2560
 screenY = 1440
 halfX = screenX / 2
@@ -55,25 +63,34 @@ def clickMouseAtX(x):
 
 time.sleep(5)
 
-pyautogui.keyDown('a')
-time.sleep(0.7)
+numberOfClicks = 0
+node1 = Node((screenX - 1900) / 7, 1950)
 
-screenPosition = inferScreenPosition()
-shootingAngle = 300
-moveMouseToAngle(shootingAngle, playerPosition=screenPosition)
+pyautogui.keyDown('a')
+time.sleep(1.1)
+
+firstClickX = node1.calculate(numberOfClicks)
 pyautogui.keyDown('space')
-pyautogui.click()
-time.sleep(0.2)
+clickMouseAtX(firstClickX)
+numberOfClicks = numberOfClicks + 1
+time.sleep(0.25)
 pyautogui.keyUp('space')
 
-clickMouseAtX(screenX * 0.75)
-time.sleep(1)
+clickMouseAtX(node1.calculate(numberOfClicks))
+numberOfClicks = numberOfClicks + 1
+time.sleep(0.25)
 
-clickMouseAtX(screenX * 0.66)
-time.sleep(1)
+clickMouseAtX(node1.calculate(numberOfClicks))
+numberOfClicks = numberOfClicks + 1
+time.sleep(0.25)
 
-clickMouseAtX(screenX * 0.50)
-time.sleep(1)
+clickMouseAtX(node1.calculate(numberOfClicks))
+numberOfClicks = numberOfClicks + 1
+time.sleep(0.25)
+
+clickMouseAtX(node1.calculate(numberOfClicks))
+numberOfClicks = numberOfClicks + 1
+time.sleep(0.25)
 
 pyautogui.keyUp('a')
 
