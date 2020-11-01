@@ -50,46 +50,14 @@ time.sleep(5)
 
 pyautogui.keyDown('a')
 time.sleep(0.7)
-#pyautogui.keyUp('a')
 
 screenPosition = inferScreenPosition()
-print(screenPosition)
-
 shootingAngle = 300
-
 moveMouseToAngle(shootingAngle, playerPosition=screenPosition)
-
 pyautogui.keyDown('space')
 pyautogui.click()
 time.sleep(0.2)
-
-screenPosition2 = inferScreenPosition()
-
 pyautogui.keyUp('space')
-
-clickMouseAtAngle(shootingAngle, playerPosition=screenPosition2)
-#pyautogui.click()
-time.sleep(0.5)
-
-screenPosition = inferScreenPosition()
-
-clickMouseAtAngle(shootingAngle, playerPosition=screenPosition)
-#pyautogui.click()
-time.sleep(1.0)
-
-screenPosition = inferScreenPosition()
-print(screenPosition)
-
-moveMouseToAngle(shootingAngle, playerPosition=screenPosition)
-pyautogui.click()
-time.sleep(1.0)
-
-screenPosition = inferScreenPosition()
-print(screenPosition)
-
-moveMouseToAngle(shootingAngle, playerPosition=screenPosition)
-pyautogui.click()
-time.sleep(1.0)
 
 pyautogui.keyUp('a')
 
